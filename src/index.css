@@ -1,0 +1,228 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CanchAPP — Global Styles
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Variables globales ─────────────────────────────────────────── */
+:root {
+  --clr-bg:         #05020c;
+  --clr-surface:    rgba(22, 22, 38, 0.45);
+  --clr-border:     rgba(255, 255, 255, 0.08);
+  --clr-green:      #10b981;
+  --clr-green-lt:   #34d399;
+  --clr-amber:      #f59e0b;
+  --clr-text:       #e5e7eb;
+  --clr-muted:      #6b7280;
+  --font-display:   'Bebas Neue', sans-serif;
+  --font-body:      'Poppins', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── Fondo animado ──────────────────────────────────────────────── */
+.animated-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: linear-gradient(45deg, #020f0c, #0a001f, #001122);
+  background-size: 400% 400%;
+  animation: bg-shift 20s ease infinite;
+  transition: background-image 0.8s ease;
+}
+.animated-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(16,185,129,0.018) 60px, rgba(16,185,129,0.018) 61px),
+    repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(16,185,129,0.018) 60px, rgba(16,185,129,0.018) 61px);
+  pointer-events: none;
+}
+@keyframes bg-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Orbe ambiental ─────────────────────────────────────────────── */
+.ambient-orb {
+  position: fixed;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16,185,129,0.07) 0%, transparent 70%);
+  top: -200px; right: -200px;
+  pointer-events: none;
+  z-index: -1;
+  animation: orb-drift 12s ease-in-out infinite alternate;
+}
+@keyframes orb-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-60px, 80px) scale(1.1); }
+}
+
+/* ── Glass ──────────────────────────────────────────────────────── */
+.glass {
+  background: var(--clr-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--clr-border);
+}
+
+/* ── Neon card ──────────────────────────────────────────────────── */
+.neon-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.neon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 16px rgba(16,185,129,0.35), 0 0 40px rgba(16,185,129,0.12);
+}
+
+/* ── Neon text ──────────────────────────────────────────────────── */
+.neon-text {
+  color: var(--clr-green-lt);
+  text-shadow: 0 0 8px rgba(52,211,153,0.6), 0 0 20px rgba(52,211,153,0.3);
+}
+
+/* ── Display font ───────────────────────────────────────────────── */
+.display { font-family: var(--font-display); letter-spacing: 0.04em; }
+
+/* ── Bottom nav ─────────────────────────────────────────────────── */
+.bottom-nav {
+  background: rgba(7,5,18,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(16,185,129,0.12);
+}
+
+/* ── Filter chips ───────────────────────────────────────────────── */
+.chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.chip:hover { background: rgba(255,255,255,0.08); }
+.chip.active {
+  background: rgba(16,185,129,0.15);
+  border-color: rgba(16,185,129,0.5);
+  color: var(--clr-green-lt);
+}
+
+/* ── Court tab ──────────────────────────────────────────────────── */
+.court-tab {
+  transition: all 0.2s ease;
+  border-radius: 9999px;
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--clr-muted);
+  border: 1px solid transparent;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.court-tab.active {
+  background: rgba(16,185,129,0.15);
+  color: var(--clr-green-lt);
+  border-color: rgba(52,211,153,0.3);
+}
+
+/* ── Time slot ──────────────────────────────────────────────────── */
+.time-slot { transition: all 0.18s ease; }
+.time-slot.available { cursor: pointer; }
+.time-slot.available:hover {
+  transform: scale(1.05);
+  background: rgba(16,185,129,0.15);
+  border-color: rgba(52,211,153,0.4);
+}
+
+/* ── Scrollbar oculta ───────────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Range slider ───────────────────────────────────────────────── */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  background: var(--clr-green);
+  cursor: pointer;
+  border-radius: 50%;
+  margin-top: -6px;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px; height: 20px;
+  background: var(--clr-green);
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+}
+
+/* ── Toast ──────────────────────────────────────────────────────── */
+.toast {
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+  transform: translateY(80px);
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ── Scanlines ──────────────────────────────────────────────────── */
+.scanlines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ── Pulse dot ──────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50%       { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+}
+.pulse-dot { animation: pulse-dot 2s infinite; }
+
+/* ── Fade up ────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up   { animation: fade-up 0.5s ease forwards; }
+.fade-up-1 { animation: fade-up 0.5s 0.05s ease both; }
+.fade-up-2 { animation: fade-up 0.5s 0.12s ease both; }
+.fade-up-3 { animation: fade-up 0.5s 0.2s  ease both; }
+.fade-up-4 { animation: fade-up 0.5s 0.28s ease both; }
+.fade-up-5 { animation: fade-up 0.5s 0.36s ease both; }
+
+/* ── Slide left ─────────────────────────────────────────────────── */
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.slide-left { animation: slide-in-left 0.6s ease both; }
+
+/* ── Flatpickr ──────────────────────────────────────────────────── */
+.flatpickr-calendar {
+  font-family: var(--font-body) !important;
+  background: #0f0f1a !important;
+  border: 1px solid rgba(16,185,129,0.2) !important;
+  box-shadow: 0 0 30px rgba(16,185,129,0.1) !important;
+}
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+  background: var(--clr-green) !important;
+  border-color: var(--clr-green) !important;
+}
+.flatpickr-day:hover { background: rgba(16,185,129,0.15) !important; }

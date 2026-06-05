@@ -1,0 +1,19 @@
+.pixel-snow-container {
+  position: fixed; /* Cambiado a fixed para asegurar que tome la pantalla */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  contain: layout style paint;
+  z-index: 0;
+}
+
+.pixel-snow-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
