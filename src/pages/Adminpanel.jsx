@@ -28,46 +28,46 @@ const PAY_STATUS = {
 const PAY_LIGHT = { online:"bg-emerald-50 text-emerald-700 ring-emerald-200", partial:"bg-amber-50 text-amber-700 ring-amber-200", inperson:"bg-slate-100 text-slate-600 ring-slate-200" };
 const PAY_DARK  = { online:"bg-emerald-500/10 text-emerald-400 ring-emerald-500/20", partial:"bg-amber-500/10 text-amber-400 ring-amber-500/20", inperson:"bg-white/5 text-slate-400 ring-white/10" };
 
-// ── Dark mode aislado al panel — NO modifica <html> ───────────────────────────
+// ?? Dark mode aislado al panel ? NO modifica <html> ???????????????????????????
 function useAdminTheme() {
   const [dark, _set] = useState(() => localStorage.getItem("adminTheme") === "dark");
   const toggle = () => _set(d => { const n=!d; localStorage.setItem("adminTheme",n?"dark":"light"); return n; });
   return [dark, toggle];
 }
 
-// ── Tokens de tema ────────────────────────────────────────────────────────────
+// ?? Tokens de tema ????????????????????????????????????????????????????????????
 function T(dark) {
   return {
-    bg:   dark?"bg-[#06060f]":"bg-slate-50",
-    side: dark?"bg-[#08080f] border-white/5":"bg-white border-slate-200",
-    card: dark?"bg-[#0d0d18] ring-1 ring-white/6":"bg-white ring-1 ring-slate-200",
-    modal:dark?"bg-[#0c0c14] ring-1 ring-white/8":"bg-white ring-1 ring-slate-200",
+    bg:   dark?"bg-[#06060f]":"bg-slate-100",
+    side: dark?"bg-[#0a0a14] border-white/5":"bg-white border-slate-200 shadow-sm",
+    card: dark?"bg-[#0d0d1a] ring-1 ring-white/6":"bg-white ring-1 ring-slate-200 shadow-sm",
+    modal:dark?"bg-[#0c0c16] ring-1 ring-white/8":"bg-white ring-1 ring-slate-200 shadow-xl",
     div:  dark?"border-white/6":"border-slate-200",
-    inp:  dark?"bg-white/4 border-white/8 text-white placeholder-slate-600":"bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400",
-    sel:  dark?"bg-white/4 border-white/8 text-white":"bg-slate-50 border-slate-200 text-slate-900",
+    inp:  dark?"bg-white/5 border-white/10 text-white placeholder-slate-500":"bg-white border-slate-300 text-slate-900 placeholder-slate-400",
+    sel:  dark?"bg-white/5 border-white/10 text-white":"bg-white border-slate-300 text-slate-900",
     p:    dark?"text-white":"text-slate-900",
     s:    dark?"text-slate-400":"text-slate-500",
-    m:    dark?"text-slate-300":"text-slate-600",
-    pill: dark?"bg-white/4":"bg-slate-100",
-    rh:   dark?"hover:bg-white/2":"hover:bg-slate-50",
-    nav:  dark?"bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20":"bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200",
-    navI: dark?"text-slate-400 hover:bg-white/5 hover:text-white":"text-slate-500 hover:bg-slate-50 hover:text-slate-800",
-    kpiEm:dark?"from-emerald-500/10":"from-emerald-50",
-    kpiSk:dark?"from-sky-500/10":"from-sky-50",
-    kpiAm:dark?"from-amber-500/10":"from-amber-50",
-    kpiVi:dark?"from-violet-500/10":"from-violet-50",
+    m:    dark?"text-slate-300":"text-slate-700",
+    pill: dark?"bg-white/6 hover:bg-white/10":"bg-slate-100 hover:bg-slate-200",
+    rh:   dark?"hover:bg-white/3":"hover:bg-slate-50",
+    nav:  dark?"bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/25":"bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200",
+    navI: dark?"text-slate-400 hover:bg-white/6 hover:text-white":"text-slate-600 hover:bg-slate-100 hover:text-slate-900",
+    kpiEm:dark?"from-emerald-500/12 to-transparent":"from-emerald-50 to-white",
+    kpiSk:dark?"from-sky-500/12 to-transparent":"from-sky-50 to-white",
+    kpiAm:dark?"from-amber-500/12 to-transparent":"from-amber-50 to-white",
+    kpiVi:dark?"from-violet-500/12 to-transparent":"from-violet-50 to-white",
     tag: {
-      green: dark?"bg-emerald-500/10 text-emerald-400 ring-emerald-500/20":"bg-emerald-100 text-emerald-700 ring-emerald-200",
-      blue:  dark?"bg-sky-500/10 text-sky-400 ring-sky-500/20":"bg-sky-100 text-sky-700 ring-sky-200",
-      amber: dark?"bg-amber-500/10 text-amber-400 ring-amber-500/20":"bg-amber-100 text-amber-700 ring-amber-200",
-      purple:dark?"bg-violet-500/10 text-violet-400 ring-violet-500/20":"bg-violet-100 text-violet-700 ring-violet-200",
-      red:   dark?"bg-rose-500/10 text-rose-400 ring-rose-500/20":"bg-rose-100 text-rose-700 ring-rose-200",
-      slate: dark?"bg-white/5 text-slate-400 ring-white/10":"bg-slate-100 text-slate-600 ring-slate-200",
+      green: dark?"bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20":"bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200",
+      blue:  dark?"bg-sky-500/10 text-sky-400 ring-1 ring-sky-500/20":"bg-sky-100 text-sky-700 ring-1 ring-sky-200",
+      amber: dark?"bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/20":"bg-amber-100 text-amber-700 ring-1 ring-amber-200",
+      purple:dark?"bg-violet-500/10 text-violet-400 ring-1 ring-violet-500/20":"bg-violet-100 text-violet-700 ring-1 ring-violet-200",
+      red:   dark?"bg-rose-500/10 text-rose-400 ring-1 ring-rose-500/20":"bg-rose-100 text-rose-700 ring-1 ring-rose-200",
+      slate: dark?"bg-white/5 text-slate-400 ring-1 ring-white/10":"bg-slate-100 text-slate-600 ring-1 ring-slate-200",
     },
   };
 }
 
-// ── UI Primitives ─────────────────────────────────────────────────────────────
+// ?? UI Primitives ?????????????????????????????????????????????????????????????
 const Tag = ({c="slate",children,th}) => (
   <span className={cx("inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold tracking-wide ring-1",th.tag[c])}>{children}</span>
 );
@@ -108,7 +108,7 @@ function BookingAlert({alerts,onDismiss}) {
         <motion.div key={a.id} initial={{y:-80,opacity:0}} animate={{y:0,opacity:1}} exit={{y:-80,opacity:0}} transition={{type:"spring",damping:20}}
           className="fixed top-0 left-56 right-0 z-[250] flex items-center justify-between px-6 py-3 bg-emerald-500 text-black font-bold text-sm shadow-xl">
           <div className="flex items-center gap-3">
-            <motion.span animate={{scale:[1,1.3,1]}} transition={{repeat:3,duration:0.4}} className="text-xl">\uD83D\uDD14</motion.span>
+            <motion.span animate={{scale:[1,1.3,1]}} transition={{repeat:3,duration:0.4}} className="text-xl">ALERTA</motion.span>
             <span>Nueva reserva: <strong>{a.courtName}</strong> \u00b7 {a.time} hs</span>
           </div>
           <button onClick={()=>onDismiss(a.id)} className="text-black/60 hover:text-black font-black text-lg ml-4">\u00d7</button>
@@ -184,28 +184,143 @@ function TSelect({label,value,onChange,children,th,className=""}) {
   );
 }
 
-function DateStrip({selected,onChange,th}) {
-  const dates=range(tod(),14);
-  const rf=useRef(null);
-  useEffect(()=>{
-    const idx=dates.indexOf(selected);
-    if(rf.current&&idx>=0) rf.current.children[idx]?.scrollIntoView({inline:"center",behavior:"smooth"});
-  },[selected]);
+function DateStrip({selected, onChange, th, dark}) {
+  const [showPicker, setShowPicker] = useState(false);
+  const [pickerMonth, setPickerMonth] = useState(() => selected.slice(0,7));
+
+  const quickDates = Array.from({length: 7}, (_, i) => {
+    const d = new Date(tod() + "T12:00");
+    d.setDate(d.getDate() - i);
+    return d.toISOString().split("T")[0];
+  }).reverse();
+
+  const [pYear, pMonth] = pickerMonth.split("-").map(Number);
+  const firstDay = new Date(pYear, pMonth - 1, 1).getDay();
+  const daysInMonth = new Date(pYear, pMonth, 0).getDate();
+  const startOffset = (firstDay + 6) % 7;
+
+  const monthLabel = new Date(selected + "T12:00")
+    .toLocaleDateString("es-ES", {month:"long", year:"numeric"});
+
   return (
-    <div ref={rf} className="flex gap-2 overflow-x-auto no-scrollbar pb-0.5">
-      {dates.map(d=>{
-        const dt=new Date(d+"T12:00"); const isT=d===tod(); const isSel=d===selected;
-        return (
-          <button key={d} onClick={()=>onChange(d)}
-            className={cx("flex-shrink-0 flex flex-col items-center px-3.5 py-2.5 rounded-2xl font-semibold transition-all min-w-[56px]",
-              isSel?"bg-emerald-500 text-black shadow-lg shadow-emerald-500/25":
-              isT?cx(th.pill,"text-emerald-500 ring-1 ring-emerald-200"):
-              cx(th.pill,th.s,"ring-1",th.div))}>
-            <span className="text-[10px] uppercase tracking-wide">{dt.toLocaleDateString("es-ES",{weekday:"short"})}</span>
-            <span className="text-xl font-black leading-tight">{dt.getDate()}</span>
+    <div className="space-y-2">
+      <div className="flex items-center justify-between mb-1">
+        <button
+          onClick={() => { setPickerMonth(selected.slice(0,7)); setShowPicker(true); }}
+          className={cx("text-sm font-bold capitalize flex items-center gap-1.5 hover:text-emerald-400 transition", th.p)}>
+          {monthLabel}
+          <span className="text-[10px] text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full font-semibold">ver mes</span>
+        </button>
+        {selected !== tod() && (
+          <button onClick={() => onChange(tod())}
+            className="px-2.5 py-1 rounded-lg text-[10px] font-bold text-emerald-500 bg-emerald-500/10 hover:bg-emerald-500/20 transition">
+            Hoy
           </button>
-        );
-      })}
+        )}
+      </div>
+
+      <div className="grid grid-cols-7 gap-1">
+        {quickDates.map(d => {
+          const dt    = new Date(d + "T12:00");
+          const isT   = d === tod();
+          const isSel = d === selected;
+          return (
+            <button key={d} onClick={() => onChange(d)}
+              className={cx(
+                "flex flex-col items-center py-2 px-1 rounded-xl transition-all",
+                isSel ? "bg-emerald-500 text-black shadow-md shadow-emerald-500/30"
+                : isT  ? cx("ring-2 ring-emerald-500/50", th.pill, "text-emerald-500")
+                       : cx(th.pill, th.s, "hover:ring-1 hover:ring-emerald-400/40")
+              )}>
+              <span className="text-[9px] uppercase tracking-wider font-semibold">
+                {dt.toLocaleDateString("es-ES", {weekday:"short"})}
+              </span>
+              <span className={cx("text-base font-black leading-tight mt-0.5", isSel ? "text-black" : th.p)}>
+                {dt.getDate()}
+              </span>
+              {isT && !isSel && <span className="w-1 h-1 rounded-full bg-emerald-400 mt-0.5"/>}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="flex items-center gap-2">
+        <input type="date" value={selected}
+          onChange={e => e.target.value && onChange(e.target.value)}
+          className={cx("flex-1 text-xs px-3 py-2 rounded-xl border outline-none transition", th.inp)}
+        />
+      </div>
+
+      {showPicker && (
+        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4"
+          style={{background:"rgba(0,0,0,0.7)",backdropFilter:"blur(8px)"}}
+          onClick={() => setShowPicker(false)}>
+          <div className={cx("w-full max-w-sm rounded-2xl p-5 shadow-2xl", th.card)}
+            style={{border:"1px solid rgba(255,255,255,0.08)"}}
+            onClick={e => e.stopPropagation()}>
+
+            <div className="flex items-center justify-between mb-4">
+              <button onClick={() => {
+                const d = new Date(pYear, pMonth - 2, 1);
+                setPickerMonth(d.toISOString().slice(0,7));
+              }} className={cx("w-8 h-8 rounded-xl flex items-center justify-center font-bold transition", th.pill, th.s)}>
+                &lt;
+              </button>
+              <div className="text-center">
+                <p className={cx("font-bold capitalize text-sm", th.p)}>
+                  {new Date(pYear, pMonth-1, 1).toLocaleDateString("es-ES",{month:"long"})}
+                </p>
+                <select value={pYear}
+                  onChange={e => setPickerMonth(e.target.value+"-"+String(pMonth).padStart(2,"0"))}
+                  className={cx("text-xs mt-0.5 rounded-lg px-2 py-0.5 outline-none border", th.inp)}>
+                  {Array.from({length:6}, (_,i) => new Date().getFullYear() - i).map(y => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+              </div>
+              <button onClick={() => {
+                const d = new Date(pYear, pMonth, 1);
+                setPickerMonth(d.toISOString().slice(0,7));
+              }} className={cx("w-8 h-8 rounded-xl flex items-center justify-center font-bold transition", th.pill, th.s)}>
+                &gt;
+              </button>
+            </div>
+
+            <div className="grid grid-cols-7 mb-1">
+              {["Lu","Ma","Mi","Ju","Vi","Sa","Do"].map(d => (
+                <div key={d} className={cx("text-center text-[10px] font-bold py-1", th.s)}>{d}</div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-7 gap-0.5">
+              {Array.from({length: startOffset}).map((_, i) => <div key={"e"+i}/>)}
+              {Array.from({length: daysInMonth}, (_, i) => {
+                const day = String(i+1).padStart(2,"0");
+                const dateStr = pYear+"-"+String(pMonth).padStart(2,"0")+"-"+day;
+                const isT   = dateStr === tod();
+                const isSel = dateStr === selected;
+                return (
+                  <button key={day}
+                    onClick={() => { onChange(dateStr); setShowPicker(false); }}
+                    className={cx(
+                      "aspect-square rounded-xl text-xs font-semibold transition-all flex items-center justify-center",
+                      isSel ? "bg-emerald-500 text-black shadow-md"
+                      : isT  ? cx("ring-2 ring-emerald-400/60 text-emerald-400", th.pill)
+                             : cx(th.pill, th.s, "hover:bg-emerald-500/10 hover:text-emerald-400")
+                    )}>
+                    {i+1}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button onClick={() => setShowPicker(false)}
+              className={cx("w-full mt-4 py-2 rounded-xl text-xs font-semibold transition", th.pill, th.s)}>
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -246,13 +361,24 @@ function playChime() {
   } catch{}
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
+// ?????????????????????????????????????????????????????????????????????????????
 // PAGE COMPONENT
-// ═════════════════════════════════════════════════════════════════════════════
+// ?????????????????????????????????????????????????????????????????????????????
 export default function AdminPanel() {
   const navigate = useNavigate();
   const [dark, toggleDark] = useAdminTheme();
   const th = T(dark);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Override global CanchAPP background for admin panel
+  useEffect(() => {
+    document.body.classList.add("admin-mode");
+    document.body.setAttribute("data-admin-dark", dark ? "1" : "0");
+    return () => {
+      document.body.classList.remove("admin-mode");
+      document.body.removeAttribute("data-admin-dark");
+    };
+  }, [dark]);
 
   const [user,setUser]               = useState(null);
   const [complexId,setComplexId]     = useState(null);
@@ -524,11 +650,11 @@ export default function AdminPanel() {
   );
 
   const TABS=[
-    {key:"dashboard",label:"Dashboard",icon:"\uD83D\uDCCA"},
+    {key:"dashboard",label:"Dashboard",icon:"Stats"},
     {key:"courts",   label:"Canchas",  icon:"\u26BD"},
-    {key:"slots",    label:"Horarios", icon:"\uD83D\uDD50"},
-    {key:"search",   label:"Buscar",   icon:"\uD83D\uDD0D"},
-    {key:"profile",  label:"Complejo", icon:"\uD83C\uDFDF\uFE0F"},
+    {key:"slots",    label:"Horarios", icon:"Hora"},
+    {key:"search",   label:"Buscar",   icon:"Buscar"},
+    {key:"profile",  label:"Complejo", icon:"Campo"},
   ];
 
   // Slot row
@@ -578,9 +704,9 @@ export default function AdminPanel() {
               className={cx("px-2.5 py-1 text-[11px] font-semibold rounded-lg transition ring-1",
                 slot.blocked?(dark?"text-emerald-400 bg-emerald-500/10 ring-emerald-500/20":"text-emerald-600 bg-emerald-50 ring-emerald-200")
                             :(dark?"text-rose-400 bg-rose-500/10 ring-rose-500/20":"text-rose-600 bg-rose-50 ring-rose-200")
-              )}>{slot.blocked?"🔓":"🔒"}</button>
+              )}>{slot.blocked?"DESBLOQUEAR":"BLOQUEAR"}</button>
             {!hasPl&&<button onClick={()=>delSlot(slot.courtId,slot.key,false)}
-              className={cx("px-2 py-1 text-[11px] rounded-lg transition",dark?"text-rose-400 bg-rose-500/8":"text-rose-500 bg-rose-50")}>🗑</button>}
+              className={cx("px-2 py-1 text-[11px] rounded-lg transition",dark?"text-rose-400 bg-rose-500/8":"text-rose-500 bg-rose-50")}>X</button>}
           </div>
         </td>
       </tr>
@@ -588,12 +714,22 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className={cx("min-h-screen flex",th.bg)} style={{fontFamily:"'Poppins',sans-serif"}}>
+    <div className={cx("min-h-screen flex",th.bg)}
+      style={{fontFamily:"'Poppins',sans-serif", backgroundColor: dark?"#06060f":"#f8fafc"}}>
       <BookingAlert alerts={bookingAlerts} onDismiss={id=>setBookingAlerts(a=>a.filter(x=>x.id!==id))}/>
 
+      {/* Mobile overlay */}
+      {sidebarOpen&&(
+        <div className="fixed inset-0 bg-black/60 z-30 lg:hidden" onClick={()=>setSidebarOpen(false)}/>
+      )}
+
       {/* SIDEBAR */}
-      <aside className={cx("w-56 flex-shrink-0 fixed h-full z-40 flex flex-col border-r",th.side)}>
-        <div className={cx("p-5 border-b",th.div)}>
+      <aside className={cx(
+        "fixed h-full z-40 flex flex-col border-r transition-transform duration-300 w-60",
+        th.side,
+        sidebarOpen?"translate-x-0":"-translate-x-full lg:translate-x-0"
+      )} style={{backgroundColor: dark?"#08080f":"#ffffff"}}>
+        <div className={cx("p-4 border-b",th.div)}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center font-black text-black text-sm">C</div>
@@ -602,19 +738,22 @@ export default function AdminPanel() {
                 <p className="text-emerald-500 text-[10px] font-semibold tracking-widest uppercase mt-0.5">Admin</p>
               </div>
             </div>
-            <button onClick={toggleDark} className={cx("w-8 h-8 rounded-xl flex items-center justify-center transition text-base",th.pill)}>
-              {dark?"☀️":"🌙"}
-            </button>
+            <div className="flex gap-1">
+              <button onClick={toggleDark} className={cx("w-8 h-8 rounded-xl flex items-center justify-center transition text-sm",th.pill)}>
+                {dark?"SOL":"LUN"}
+              </button>
+              <button onClick={()=>setSidebarOpen(false)} className={cx("w-8 h-8 rounded-xl flex items-center justify-center transition lg:hidden",th.pill,th.s)}>X</button>
+            </div>
           </div>
         </div>
         <div className={cx("px-4 py-3 border-b",th.div)}>
           <p className={cx("text-[10px] uppercase tracking-wider font-semibold mb-0.5",th.s)}>Gestionando</p>
           <p className={cx("text-sm font-semibold truncate",th.p)}>{complexData?.name||complexId}</p>
-          <p className={cx("text-xs truncate",th.s)}>📍 {complexData?.zone}</p>
+          <p className={cx("text-xs truncate",th.s)}>{complexData?.zone}</p>
         </div>
         <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
           {TABS.map(t=>(
-            <button key={t.key} onClick={()=>setTab(t.key)}
+            <button key={t.key} onClick={()=>{setTab(t.key);setSidebarOpen(false);}}
               className={cx("w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all",
                 tab===t.key?th.nav:th.navI)}>
               <span>{t.icon}</span>{t.label}
@@ -629,56 +768,67 @@ export default function AdminPanel() {
             </div>
           ))}
         </div>
-        <div className={cx("p-4 border-t",th.div,"space-y-1")}>
-          <button onClick={()=>navigate("/")} className={cx("w-full text-left px-3 py-2 text-xs rounded-xl transition font-medium",th.s,th.navI)}>← Volver a la app</button>
-          <button onClick={()=>signOut(auth).then(()=>navigate("/"))} className="w-full text-left px-3 py-2 text-xs text-rose-500 hover:bg-rose-50 rounded-xl transition font-medium">Cerrar sesión</button>
+        <div className={cx("p-3 border-t",th.div,"space-y-1")}>
+          <button onClick={()=>navigate("/")} className={cx("w-full text-left px-3 py-2 text-xs rounded-xl transition font-medium",th.s,th.navI)}>Volver a la app</button>
+          <button onClick={()=>signOut(auth).then(()=>navigate("/"))} className="w-full text-left px-3 py-2 text-xs text-rose-500 hover:bg-rose-50 rounded-xl transition font-medium">Cerrar sesion</button>
         </div>
       </aside>
 
       {/* MAIN */}
-      <main className="flex-1 ml-56 overflow-y-auto min-h-screen">
+      <main className="flex-1 lg:ml-60 overflow-y-auto min-h-screen"
+        style={{backgroundColor: dark?"#06060f":"#f8fafc"}}>
+        {/* Top bar mobile */}
+        <div className={cx("sticky top-0 z-20 flex items-center gap-3 px-4 py-3 border-b lg:hidden",th.side,th.div)}>
+          <button onClick={()=>setSidebarOpen(true)} className={cx("w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0",th.pill,th.p)}>
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+          <p className={cx("font-bold text-sm flex-1",th.p)}>{TABS.find(t=>t.key===tab)?.label||"Dashboard"}</p>
+          <div className="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center font-black text-black text-xs">C</div>
+        </div>
 
         {/* DASHBOARD */}
         {tab==="dashboard"&&(
-          <div className="p-6 space-y-6 max-w-6xl mx-auto">
+          <div className="p-4 lg:p-6 space-y-4 lg:space-y-6 max-w-6xl mx-auto">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className={cx("text-2xl font-bold tracking-tight",th.p)}>Dashboard</h1>
+                <h1 className={cx("text-xl lg:text-2xl font-bold tracking-tight",th.p)}>Dashboard</h1>
                 <p className={cx("text-sm mt-0.5 capitalize",th.s)}>{new Date().toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})}</p>
               </div>
-              <Btn variant="amber" onClick={()=>setBilling(true)}>💰 Facturación</Btn>
+              <Btn variant="amber" onClick={()=>setBilling(true)}>DINERO Facturacion</Btn>
             </div>
-            <DateStrip selected={selDate} onChange={setSelDate} th={th}/>
+            <DateStrip selected={selDate} onChange={setSelDate} th={th} dark={dark}/>
             <div className={cx("flex gap-1.5 p-1 rounded-2xl w-fit",th.pill)}>
               {courtTypes.map(ct=>(
                 <Pill key={ct} active={courtFilter===ct} onClick={()=>setCourtFilter(ct)} th={th}>{ct==="all"?"Todas":ct}</Pill>
               ))}
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <KpiCard icon="👥" label="Jugadores" value={totalPl} kpiFrom={th.kpiEm} th={th}/>
-              <KpiCard icon="📋" label="Slots ocupados" value={occupied+"/"+slotsDay.length} kpiFrom={th.kpiSk} th={th}/>
-              <KpiCard icon="🏟️" label="Canchas enteras" value={fullCts} kpiFrom={th.kpiVi} th={th}/>
-              <KpiCard icon="💰" label="Facturación hoy" value={fmt(billDay.total)} sub="tap para detalles" kpiFrom={th.kpiAm} onClick={()=>setBilling(true)} th={th}/>
+            <div className="grid grid-cols-2 gap-3 lg:gap-4">
+              <KpiCard icon="Jug" label="Jugadores" value={totalPl} kpiFrom={th.kpiEm} th={th}/>
+              <KpiCard icon="HISTORIAL" label="Slots ocupados" value={occupied+"/"+slotsDay.length} kpiFrom={th.kpiSk} th={th}/>
+              <KpiCard icon="Ent" label="Canchas enteras" value={fullCts} kpiFrom={th.kpiVi} th={th}/>
+              <KpiCard icon="$" label="Facturacion hoy" value={fmt(billDay.total)} sub="tap para detalles" kpiFrom={th.kpiAm} onClick={()=>setBilling(true)} th={th}/>
             </div>
             <div className={cx(th.card,"overflow-hidden")}>
               <div className={cx("flex items-center justify-between px-6 py-4 border-b",th.div)}>
                 <div>
-                  <h2 className={cx("font-semibold",th.p)}>Slots del día</h2>
+                  <h2 className={cx("font-semibold",th.p)}>Slots del da</h2>
                   <p className={cx("text-xs mt-0.5",th.s)}>
                     {new Date(selDate+"T12:00").toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})}
-                    {selDate===tod()&&<span className="ml-2 text-emerald-500 font-medium">• Hoy</span>}
+                    {selDate===tod()&&<span className="ml-2 text-emerald-500 font-medium">? Hoy</span>}
                   </p>
                 </div>
                 <Btn variant="ghost" size="sm" onClick={()=>{setSDate(selDate);setSHours([]);setSlotModal(true);}}>+ Agregar slots</Btn>
               </div>
               {slotsDay.length===0?(
                 <div className="py-16 text-center">
-                  <p className="text-4xl mb-3">📅</p>
-                  <p className={cx("text-sm font-medium",th.s)}>Sin slots este día</p>
-                  <button onClick={()=>{setSDate(selDate);setSlotModal(true);}} className="mt-3 text-emerald-500 text-xs hover:underline font-medium">Agregar horarios →</button>
+                  <p className="text-4xl mb-3">?</p>
+                  <p className={cx("text-sm font-medium",th.s)}>Sin slots este da</p>
+                  <button onClick={()=>{setSDate(selDate);setSlotModal(true);}} className="mt-3 text-emerald-500 text-xs hover:underline font-medium">Agregar horarios ?</button>
                 </div>
               ):(
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto -mx-4 lg:mx-0 px-4 lg:px-0">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className={cx("border-b",th.div)}>
@@ -697,16 +847,16 @@ export default function AdminPanel() {
 
         {/* CANCHAS */}
         {tab==="courts"&&(
-          <div className="p-6 space-y-6 max-w-5xl mx-auto">
+          <div className="p-4 lg:p-6 space-y-4 lg:space-y-6 max-w-5xl mx-auto">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className={cx("text-2xl font-bold tracking-tight",th.p)}>Canchas</h1>
-                <p className={cx("text-sm mt-0.5",th.s)}>Precio fijo {fmt(PRECIO_CANCHA)} · {courts.length} canchas</p>
+                <p className={cx("text-sm mt-0.5",th.s)}>Precio fijo {fmt(PRECIO_CANCHA)} ? {courts.length} canchas</p>
               </div>
-              <Btn variant="primary" onClick={()=>{setEditCourt(null);setCForm({nombre_cancha:"",deporte:"Fútbol",tipo_superficie:"Césped Sintético"});setCourtModal(true);}}>+ Nueva cancha</Btn>
+              <Btn variant="primary" onClick={()=>{setEditCourt(null);setCForm({nombre_cancha:"",deporte:"Futbol",tipo_superficie:"Cesped Sinttico"});setCourtModal(true);}}>+ Nueva cancha</Btn>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[{l:"Cancha entera",v:fmt(PRECIO_CANCHA),s:"dueño recibe"},{l:"Por jugador",v:fmt(PRECIO_CANCHA/MAX_PLAYERS),s:"si se llena"},{l:"Pts. individual",v:PTS_INDIVIDUAL+" pts",s:"por lugar"},{l:"Pts. entera",v:PTS_ENTERA+" pts",s:"cancha completa"}].map(i=>(
+            <div className="grid grid-cols-2 gap-2 lg:gap-3">
+              {[{l:"Cancha entera",v:fmt(PRECIO_CANCHA),s:"dueo recibe"},{l:"Por jugador",v:fmt(PRECIO_CANCHA/MAX_PLAYERS),s:"si se llena"},{l:"Pts. individual",v:PTS_INDIVIDUAL+" pts",s:"por lugar"},{l:"Pts. entera",v:PTS_ENTERA+" pts",s:"cancha completa"}].map(i=>(
                 <div key={i.l} className={cx(th.card,"p-4")}>
                   <p className={cx("text-[11px] uppercase tracking-wide font-semibold",th.s)}>{i.l}</p>
                   <p className={cx("font-bold text-lg mt-0.5",th.p)}>{i.v}</p>
@@ -714,7 +864,7 @@ export default function AdminPanel() {
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-4">
               {courts.map(c=>{
                 const slots=Object.values(c.availableSlots||{});
                 const future=slots.filter(s=>s.date>=tod()).length;
@@ -724,7 +874,7 @@ export default function AdminPanel() {
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <p className={cx("font-semibold",th.p)}>{c.nombre_cancha}</p>
-                        <p className="text-emerald-500 text-xs font-medium mt-0.5">{c.deporte} · {c.tipo_superficie}</p>
+                        <p className="text-emerald-500 text-xs font-medium mt-0.5">{c.deporte} ? {c.tipo_superficie}</p>
                       </div>
                       <Tag c="amber" th={th}>{PTS_INDIVIDUAL} pts</Tag>
                     </div>
@@ -738,20 +888,20 @@ export default function AdminPanel() {
                     </div>
                     <div className="flex gap-2">
                       <button onClick={()=>{setEditCourt(c.id);setCForm({nombre_cancha:c.nombre_cancha,deporte:c.deporte,tipo_superficie:c.tipo_superficie});setCourtModal(true);}}
-                        className={cx("flex-1 py-2 text-xs font-semibold rounded-xl transition",th.btn.ghost)}>✏️ Editar</button>
+                        className={cx("flex-1 py-2 text-xs font-semibold rounded-xl transition", dark?"bg-white/5 hover:bg-white/10 text-slate-300":"bg-slate-100 hover:bg-slate-200 text-slate-600")}>EDITAR Editar</button>
                       <button onClick={()=>{setSCourtId(c.id);setSDate(tod());setSHours([]);setSlotModal(true);}}
                         className={cx("flex-1 py-2 text-xs font-semibold rounded-xl ring-1 transition",dark?"text-emerald-400 bg-emerald-500/10 ring-emerald-500/20":"text-emerald-600 bg-emerald-50 ring-emerald-200")}>+ Slots</button>
                       <button onClick={()=>setHistory({court:c,date:tod()})}
-                        className={cx("px-2.5 py-1 text-xs font-semibold rounded-xl ring-1 transition",dark?"text-sky-400 bg-sky-500/10 ring-sky-500/20":"text-sky-600 bg-sky-50 ring-sky-200")}>📋</button>
-                      <Btn variant="danger" size="sm" onClick={()=>delCourt(c.id)}>🗑</Btn>
+                        className={cx("px-2.5 py-1 text-xs font-semibold rounded-xl ring-1 transition",dark?"text-sky-400 bg-sky-500/10 ring-sky-500/20":"text-sky-600 bg-sky-50 ring-sky-200")}>?</button>
+                      <Btn variant="danger" size="sm" onClick={()=>delCourt(c.id)}>X</Btn>
                     </div>
                   </div>
                 );
               })}
               {!courts.length&&(
                 <div className="col-span-3 py-20 text-center">
-                  <p className="text-5xl mb-3">🏟️</p>
-                  <p className={cx("font-medium mb-4",th.s)}>Sin canchas todavía</p>
+                  <p className="text-5xl mb-3">CANCHA</p>
+                  <p className={cx("font-medium mb-4",th.s)}>Sin canchas todava</p>
                   <Btn variant="primary" onClick={()=>setCourtModal(true)}>Crear primera cancha</Btn>
                 </div>
               )}
@@ -761,7 +911,7 @@ export default function AdminPanel() {
 
         {/* HORARIOS */}
         {tab==="slots"&&(
-          <div className="p-6 space-y-4 max-w-5xl mx-auto">
+          <div className="p-4 lg:p-6 space-y-4 max-w-5xl mx-auto">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className={cx("text-2xl font-bold tracking-tight",th.p)}>Horarios</h1>
@@ -780,20 +930,20 @@ export default function AdminPanel() {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className={cx("font-semibold",th.p)}>{c.nombre_cancha}</h3>
-                      <p className={cx("text-xs",th.s)}>{slots.length} slots próximos</p>
+                      <p className={cx("text-xs",th.s)}>{slots.length} slots proximos</p>
                     </div>
                     <div className="flex gap-2">
                       <button onClick={()=>setHistory({court:c,date:tod()})}
-                        className={cx("px-3 py-1.5 text-xs font-semibold rounded-xl ring-1 transition",dark?"text-sky-400 bg-sky-500/10 ring-sky-500/20":"text-sky-600 bg-sky-50 ring-sky-200")}>📋 Historial</button>
+                        className={cx("px-3 py-1.5 text-xs font-semibold rounded-xl ring-1 transition",dark?"text-sky-400 bg-sky-500/10 ring-sky-500/20":"text-sky-600 bg-sky-50 ring-sky-200")}>HISTORIAL Historial</button>
                       <Btn variant="ghost" size="sm" onClick={()=>{setSCourtId(c.id);setSDate(tod());setSHours([]);setSlotModal(true);}}>+ Agregar</Btn>
                     </div>
                   </div>
-                  {!Object.keys(grouped).length?<p className={cx("text-sm",th.s)}>Sin slots próximos.</p>:(
+                  {!Object.keys(grouped).length?<p className={cx("text-sm",th.s)}>Sin slots proximos.</p>:(
                     Object.entries(grouped).map(([date,ds])=>(
                       <div key={date} className="mb-4">
                         <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-2",th.s)}>
                           {new Date(date+"T12:00").toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})}
-                          {date===tod()&&<span className="ml-2 text-emerald-500">• Hoy</span>}
+                          {date===tod()&&<span className="ml-2 text-emerald-500">? Hoy</span>}
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {ds.map(s=>{
@@ -808,7 +958,7 @@ export default function AdminPanel() {
                                 )}>
                                 <div className={cx("w-1.5 h-1.5 rounded-full",st.dot)}/>{s.time}
                                 {(s.playersJoined||0)>0&&!s.blocked&&<span className="bg-emerald-500 text-black px-1.5 py-0.5 rounded-full text-[10px] font-bold">{s.playersJoined}/{MAX_PLAYERS}</span>}
-                                {!(s.playersJoined||0)&&!s.blocked&&<span onClick={e=>{e.stopPropagation();delSlot(c.id,s.key,false);}} className="text-rose-500 font-black ml-0.5">×</span>}
+                                {!(s.playersJoined||0)&&!s.blocked&&<span onClick={e=>{e.stopPropagation();delSlot(c.id,s.key,false);}} className="text-rose-500 font-black ml-0.5">X</span>}
                               </button>
                             );
                           })}
@@ -824,15 +974,15 @@ export default function AdminPanel() {
 
         {/* BUSCADOR */}
         {tab==="search"&&(
-          <div className="p-6 space-y-6 max-w-4xl mx-auto">
+          <div className="p-4 lg:p-6 space-y-4 lg:space-y-6 max-w-4xl mx-auto">
             <div>
               <h1 className={cx("text-2xl font-bold tracking-tight",th.p)}>Buscador Global</h1>
               <p className={cx("text-sm mt-0.5",th.s)}>Canchas, slots activos, usuarios</p>
             </div>
             <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-lg">🔍</div>
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-lg">BUSCAR</div>
               <input value={gSearch} onChange={e=>setGSearch(e.target.value)}
-                placeholder="Buscar cancha, hora, apodo de usuario…"
+                placeholder="Buscar cancha, hora, apodo de usuario?"
                 className={cx("w-full border rounded-2xl pl-11 pr-4 py-3.5 text-sm outline-none transition focus:border-emerald-400",th.inp)}/>
               {gLoading&&<div className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"/>}
             </div>
@@ -840,12 +990,12 @@ export default function AdminPanel() {
               <div className="space-y-6">
                 {gResults.courts.length>0&&(
                   <div>
-                    <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-3",th.s)}>🏟️ Canchas ({gResults.courts.length})</p>
+                    <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-3",th.s)}>CANCHA Canchas ({gResults.courts.length})</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {gResults.courts.map(c=>(
                         <button key={c.id} onClick={()=>setTab("courts")} className={cx(th.card,"p-4 text-left transition hover:brightness-95 w-full")}>
                           <p className={cx("font-semibold",th.p)}>{c.nombre_cancha}</p>
-                          <p className="text-emerald-500 text-xs mt-0.5">{c.deporte} · {c.tipo_superficie}</p>
+                          <p className="text-emerald-500 text-xs mt-0.5">{c.deporte} ? {c.tipo_superficie}</p>
                           <div className="flex gap-3 mt-2 text-xs">
                             <span className={th.s}>{Object.keys(c.availableSlots||{}).length} slots</span>
                             <span className={th.s}>{Object.values(c.availableSlots||{}).reduce((a,s)=>a+(s.playersJoined||0),0)} jugadores</span>
@@ -857,7 +1007,7 @@ export default function AdminPanel() {
                 )}
                 {gResults.slots.length>0&&(
                   <div>
-                    <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-3",th.s)}>⚽ Slots con jugadores ({gResults.slots.length})</p>
+                    <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-3",th.s)}>FUTBOL Slots con jugadores ({gResults.slots.length})</p>
                     <div className={cx(th.card,"overflow-hidden")}>
                       <table className="w-full text-sm">
                         <thead>
@@ -887,14 +1037,14 @@ export default function AdminPanel() {
                 )}
                 {gResults.users.length>0&&(
                   <div>
-                    <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-3",th.s)}>👤 Usuarios ({gResults.users.length})</p>
+                    <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-3",th.s)}>USUARIO Usuarios ({gResults.users.length})</p>
                     <div className="space-y-2">
                       {gResults.users.map(u=>(
                         <div key={u.uid} className={cx(th.card,"p-4 flex items-center gap-3")}>
                           <img src={u.photoURL||"https://ui-avatars.com/api/?name="+u.username+"&background=151523&color=34d399"} className="w-10 h-10 rounded-full object-cover flex-shrink-0" alt=""/>
                           <div className="flex-1 min-w-0">
                             <p className={cx("font-semibold",th.p)}>{u.username}</p>
-                            <p className={cx("text-xs",th.s)}>{u.deporte||"—"} · {u.zona||"—"} · {u.nivel||"—"}</p>
+                            <p className={cx("text-xs",th.s)}>{u.deporte||"?"} ? {u.zona||"?"} ? {u.nivel||"?"}</p>
                           </div>
                           <div className="text-right">
                             <p className={cx("text-xs font-semibold",dark?"text-emerald-400":"text-emerald-600")}>{u.hoursPlayedFutbol||0} hs</p>
@@ -906,7 +1056,7 @@ export default function AdminPanel() {
                 )}
                 {!gResults.courts.length&&!gResults.slots.length&&!gResults.users.length&&!gLoading&&(
                   <div className="text-center py-12">
-                    <p className="text-4xl mb-3">🔍</p>
+                    <p className="text-4xl mb-3">BUSCAR</p>
                     <p className={cx("text-sm font-medium",th.s)}>Sin resultados para "{gSearch}"</p>
                   </div>
                 )}
@@ -914,8 +1064,8 @@ export default function AdminPanel() {
             )}
             {gSearch.length<2&&(
               <div className={cx("text-center py-16",th.s)}>
-                <p className="text-5xl mb-3">🔍</p>
-                <p className="text-sm font-medium">Escribí al menos 2 caracteres</p>
+                <p className="text-5xl mb-3">BUSCAR</p>
+                <p className="text-sm font-medium">Escribi al menos 2 caracteres</p>
               </div>
             )}
           </div>
@@ -923,40 +1073,40 @@ export default function AdminPanel() {
 
         {/* PERFIL */}
         {tab==="profile"&&(
-          <div className="p-6 space-y-6 max-w-4xl mx-auto">
+          <div className="p-4 lg:p-6 space-y-4 lg:space-y-6 max-w-4xl mx-auto">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className={cx("text-2xl font-bold tracking-tight",th.p)}>Mi Complejo</h1>
-                <p className={cx("text-sm mt-0.5",th.s)}>Información pública visible por los jugadores</p>
+                <p className={cx("text-sm mt-0.5",th.s)}>Informacin pblica visible por los jugadores</p>
               </div>
-              <Btn variant="primary" disabled={savingP} onClick={saveProfile}>{savingP?"Guardando…":"Guardar cambios"}</Btn>
+              <Btn variant="primary" disabled={savingP} onClick={saveProfile}>{savingP?"Guardando?":"Guardar cambios"}</Btn>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <div className={cx(th.card,"p-5 space-y-4")}>
                 <TInput label="Nombre" value={profForm.name} onChange={e=>setProfForm(p=>({...p,name:e.target.value}))} placeholder="Ej: La Bostanera" th={th}/>
-                <TInput label="Dirección" value={profForm.address} onChange={e=>setProfForm(p=>({...p,address:e.target.value}))} placeholder="Ej: Brandsen 805" th={th}/>
+                <TInput label="Direccion" value={profForm.address} onChange={e=>setProfForm(p=>({...p,address:e.target.value}))} placeholder="Ej: Brandsen 805" th={th}/>
                 <TInput label="Zona / Barrio" value={profForm.zone} onChange={e=>setProfForm(p=>({...p,zone:e.target.value}))} placeholder="Ej: La Boca" th={th}/>
                 <div>
-                  <label className={cx("block text-[11px] font-semibold uppercase tracking-wider mb-1.5",th.s)}>Descripción</label>
+                  <label className={cx("block text-[11px] font-semibold uppercase tracking-wider mb-1.5",th.s)}>Descripcion</label>
                   <textarea value={profForm.descripcion} onChange={e=>setProfForm(p=>({...p,descripcion:e.target.value}))}
-                    rows={4} placeholder="Describí tu complejo…"
+                    rows={4} placeholder="Describe tu complejo..."
                     className={cx("w-full border rounded-xl px-3.5 py-2.5 text-sm outline-none transition resize-none focus:border-emerald-400",th.inp)}/>
                 </div>
               </div>
               <div className={cx(th.card,"p-5")}>
                 <p className={cx("text-xs font-semibold uppercase tracking-wider mb-3",th.s)}>Vista previa</p>
                 <div className={cx("rounded-2xl overflow-hidden h-40 mb-4",dark?"bg-white/5":"bg-slate-100")}>
-                  <img src={complexData?.image||"https://placehold.co/600x300/e2e8f0/64748b?text=Complejo"} className="w-full h-full object-cover" alt=""/>
+                  <img src={complexData?.image||"https://placehold.co/600x300/e2e8f0/64748btext=Complejo"} className="w-full h-full object-cover" alt=""/>
                 </div>
                 <p className={cx("font-bold text-lg leading-tight",th.p)}>{profForm.name||complexData?.name}</p>
-                <p className="text-emerald-500 text-xs font-medium mt-1">📍 {profForm.zone} · {profForm.address}</p>
+                <p className="text-emerald-500 text-xs font-medium mt-1">UBICACION {profForm.zone} ? {profForm.address}</p>
                 <p className={cx("text-xs mt-2 line-clamp-2",th.s)}>{profForm.descripcion}</p>
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {courts.map(c=><span key={c.id} className={cx("text-[11px] px-2 py-0.5 rounded-lg font-medium ring-1",dark?"bg-emerald-500/8 text-emerald-400 ring-emerald-500/15":"bg-emerald-50 text-emerald-600 ring-emerald-200")}>{c.nombre_cancha}</span>)}
                 </div>
                 <div className={cx("mt-4 pt-4 border-t",th.div)}>
                   <p className={cx("text-[11px] font-medium",th.s)}>Precio fijo {fmt(PRECIO_CANCHA)}/turno.</p>
-                  <a href="mailto:soporte@canchapp.com" className="text-[11px] text-emerald-500 hover:underline mt-0.5 block">Contactar soporte →</a>
+                  <a href="mailto:soporte@canchapp.com" className="text-[11px] text-emerald-500 hover:underline mt-0.5 block">Contactar soporte ?</a>
                 </div>
               </div>
             </div>
@@ -969,14 +1119,14 @@ export default function AdminPanel() {
       {/* Historial de cancha */}
       <Modal open={!!history} onClose={()=>setHistory(null)} size="lg" th={th}>
         {history&&(<>
-          <MH title={"📋 "+history.court.nombre_cancha} sub="Historial por día" onClose={()=>setHistory(null)} th={th}/>
+          <MH title={"HISTORIAL "+history.court.nombre_cancha} sub="Historial por da" onClose={()=>setHistory(null)} th={th}/>
           <div className="p-6 space-y-4">
             <TInput label="Fecha" type="date" value={history.date} onChange={e=>setHistory(p=>({...p,date:e.target.value}))} th={th}/>
             <p className={cx("text-[11px] font-semibold uppercase tracking-wider",th.s)}>
-              {histData.length} slots · {new Date(history.date+"T12:00").toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}
+              {histData.length} slots ? {new Date(history.date+"T12:00").toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}
             </p>
             {histData.length===0?(
-              <div className="text-center py-10"><p className="text-4xl mb-2">📭</p><p className={cx("text-sm",th.s)}>Sin slots este día</p></div>
+              <div className="text-center py-10"><p className="text-4xl mb-2">?</p><p className={cx("text-sm",th.s)}>Sin slots este da</p></div>
             ):(
               <div className="space-y-2">
                 {histData.map(slot=>{
@@ -996,17 +1146,17 @@ export default function AdminPanel() {
                         <span className={cx("font-bold text-sm",dark?"text-amber-400":"text-amber-600")}>{fmt(invoice)}</span>
                       </div>
                       <div className="flex items-center gap-4 text-xs flex-wrap">
-                        <span className={th.s}>👤 {slot.playersJoined||0}/{MAX_PLAYERS} jugadores</span>
-                        {slot.bookingType==="full"&&<span className={dark?"text-violet-400":"text-violet-600"}>🏟️ Entera</span>}
-                        {slot.blocked&&<span className="text-rose-500">🔒 Bloqueado</span>}
+                        <span className={th.s}>USUARIO {slot.playersJoined||0}/{MAX_PLAYERS} jugadores</span>
+                        {slot.bookingType==="full"&&<span className={dark?"text-violet-400":"text-violet-600"}>CANCHA Entera</span>}
+                        {slot.blocked&&<span className="text-rose-500">BLOQUEAR Bloqueado</span>}
                       </div>
                       {(Object.keys(slot.players||{}).length>0||Object.keys(slot.guests||{}).length>0)&&(
                         <div className="flex gap-1 mt-2 flex-wrap">
                           {Object.keys(slot.players||{}).map(uid=>(
-                            <span key={uid} className={cx("text-[10px] px-2 py-0.5 rounded-full ring-1",dark?"bg-emerald-500/10 text-emerald-400 ring-emerald-500/20":"bg-emerald-50 text-emerald-600 ring-emerald-200")}>{uid.substring(0,8)}…</span>
+                            <span key={uid} className={cx("text-[10px] px-2 py-0.5 rounded-full ring-1",dark?"bg-emerald-500/10 text-emerald-400 ring-emerald-500/20":"bg-emerald-50 text-emerald-600 ring-emerald-200")}>{uid.substring(0,8)}?</span>
                           ))}
                           {Object.entries(slot.guests||{}).map(([gid,g])=>(
-                            <span key={gid} className={cx("text-[10px] px-2 py-0.5 rounded-full ring-1",dark?"bg-slate-500/10 text-slate-400 ring-slate-500/20":"bg-slate-100 text-slate-600 ring-slate-200")}>👤 {g.name}</span>
+                            <span key={gid} className={cx("text-[10px] px-2 py-0.5 rounded-full ring-1",dark?"bg-slate-500/10 text-slate-400 ring-slate-500/20":"bg-slate-100 text-slate-600 ring-slate-200")}>USUARIO {g.name}</span>
                           ))}
                         </div>
                       )}
@@ -1015,7 +1165,7 @@ export default function AdminPanel() {
                 })}
                 {/* Resumen */}
                 <div className={cx("rounded-2xl p-4",dark?"bg-emerald-500/10 ring-1 ring-emerald-500/20":"bg-emerald-50 ring-1 ring-emerald-200")}>
-                  <p className={cx("text-xs font-semibold mb-2",dark?"text-emerald-400":"text-emerald-700")}>Resumen del día</p>
+                  <p className={cx("text-xs font-semibold mb-2",dark?"text-emerald-400":"text-emerald-700")}>Resumen del da</p>
                   <div className="grid grid-cols-3 gap-3 text-center text-xs">
                     {[
                       {v:histData.reduce((a,s)=>a+(s.playersJoined||0),0),l:"jugadores"},
@@ -1035,12 +1185,12 @@ export default function AdminPanel() {
         </>)}
       </Modal>
 
-      {/* Facturación */}
+      {/* Facturacion */}
       <Modal open={billing} onClose={()=>setBilling(false)} size="lg" th={th}>
-        <MH title="Facturación" sub="Ingresos del complejo" onClose={()=>setBilling(false)} th={th}/>
+        <MH title="Facturacion" sub="Ingresos del complejo" onClose={()=>setBilling(false)} th={th}/>
         <div className="p-6 space-y-4">
           <div className={cx("flex gap-1.5 p-1 rounded-2xl",th.pill)}>
-            {[{k:"day",l:"Hoy"},{k:"fortnight",l:"15 días"},{k:"month",l:"Mes"}].map(t=>(
+            {[{k:"day",l:"Hoy"},{k:"fortnight",l:"15 das"},{k:"month",l:"Mes"}].map(t=>(
               <Pill key={t.k} active={billPeriod===t.k} onClick={()=>setBillPeriod(t.k)} th={th}>{t.l}</Pill>
             ))}
           </div>
@@ -1052,11 +1202,11 @@ export default function AdminPanel() {
                 <div className={cx(dark?"bg-emerald-500/10 ring-1 ring-emerald-500/15":"bg-emerald-50 ring-1 ring-emerald-200","rounded-2xl p-5 text-center")}>
                   <p className={cx("text-[11px] uppercase tracking-wider font-semibold mb-1",th.s)}>Total facturado</p>
                   <p className={cx("text-4xl font-black",th.p)}>{fmt(b.total)}</p>
-                  <p className={cx("text-xs mt-1",th.s)}>{billPeriod==="day"?"Hoy":billPeriod==="fortnight"?"Últimos 15 días":"Último mes"}</p>
+                  <p className={cx("text-xs mt-1",th.s)}>{billPeriod==="day"?"Hoy":billPeriod==="fortnight"?"ultimos 15 das":"ultimo mes"}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className={cx(dark?"bg-violet-500/8 ring-1 ring-violet-500/15":"bg-violet-50 ring-1 ring-violet-200","rounded-2xl p-4")}>
-                    <p className={cx("text-[11px] font-semibold",th.s)}>Canchas enteras</p>
+                    <p className={cx("text-[11px] font-semibold",th.s)}>Canchas enterass</p>
                     <p className={cx("font-black text-3xl mt-1",dark?"text-violet-400":"text-violet-600")}>{b.ent}</p>
                     <p className={cx("text-xs mt-0.5",th.s)}>{fmt(b.ingrEnt)}</p>
                   </div>
@@ -1068,7 +1218,7 @@ export default function AdminPanel() {
                 </div>
                 <div className={cx(th.card,"p-4 text-xs space-y-2")}>
                   <p className={cx("font-semibold mb-2",th.m)}>Desglose por turno</p>
-                  {[{l:"Cancha entera (100 pts)",v:fmt(PRECIO_CANCHA)+" para vos"},{l:"10 individuales (10 pts c/u)",v:fmt(PRECIO_CANCHA)+" para vos"},{l:"Comisión CanchAPP ("+COMISION_PCT*100+"%)",v:fmt(PRECIO_CANCHA*COMISION_PCT)+" por turno",muted:true}].map(r=>(
+                  {[{l:"Cancha entera (100 pts)",v:fmt(PRECIO_CANCHA)+" para vos"},{l:"10 individuales (10 pts c/u)",v:fmt(PRECIO_CANCHA)+" para vos"},{l:"Comisin CanchAPP ("+COMISION_PCT*100+"%)",v:fmt(PRECIO_CANCHA*COMISION_PCT)+" por turno",muted:true}].map(r=>(
                     <div key={r.l} className={cx("flex justify-between",r.muted?th.s:th.m)}>
                       <span>{r.l}</span><span className="font-semibold">{r.v}</span>
                     </div>
@@ -1083,7 +1233,7 @@ export default function AdminPanel() {
       {/* Estado de pago */}
       <Modal open={!!payModal} onClose={()=>setPayModal(null)} size="sm" th={th}>
         {payModal&&(<>
-          <MH title="Estado de pago" sub={payModal.time+" hs · "+payModal.courtName} onClose={()=>setPayModal(null)} th={th}/>
+          <MH title="Estado de pago" sub={payModal.time+" hs ? "+payModal.courtName} onClose={()=>setPayModal(null)} th={th}/>
           <div className="p-6 space-y-3">
             {Object.entries(PAY_STATUS).map(([key,val])=>(
               <button key={key} onClick={()=>setPayStatus(payModal,key)}
@@ -1094,7 +1244,7 @@ export default function AdminPanel() {
                 )}>
                 <span className={cx("w-3 h-3 rounded-full flex-shrink-0",val.dot)}/>
                 <p className={cx("font-semibold text-sm",payModal.paymentStatus===key?(dark?PAY_DARK[key].split(" ")[1]:PAY_LIGHT[key].split(" ")[1]):th.p)}>{val.label}</p>
-                {payModal.paymentStatus===key&&<span className="ml-auto text-emerald-500 font-bold">✓</span>}
+                {payModal.paymentStatus===key&&<span className="ml-auto text-emerald-500 font-bold">OK</span>}
               </button>
             ))}
           </div>
@@ -1104,7 +1254,7 @@ export default function AdminPanel() {
       {/* Detalle slot */}
       <Modal open={!!detail} onClose={()=>setDetail(null)} th={th}>
         {detail&&(<>
-          <MH title={detail.time+" hs"} sub={detail.courtName+" · "+detail.date} onClose={()=>setDetail(null)} th={th}/>
+          <MH title={detail.time+" hs"} sub={detail.courtName+" ? "+detail.date} onClose={()=>setDetail(null)} th={th}/>
           <div className="p-6 space-y-4">
             <div className="grid grid-cols-3 gap-3">
               {[
@@ -1120,7 +1270,7 @@ export default function AdminPanel() {
             </div>
             <div className="flex items-center gap-2">
               <PayTag status={detail.paymentStatus||"inperson"} th={th} dark={dark}/>
-              <button onClick={()=>{setPayModal(detail);setDetail(null);}} className={cx("text-xs hover:underline font-medium",th.s)}>Cambiar →</button>
+              <button onClick={()=>{setPayModal(detail);setDetail(null);}} className={cx("text-xs hover:underline font-medium",th.s)}>Cambiar ?</button>
             </div>
             <div className="flex gap-2 flex-wrap">
               {!detail.blocked&&detail.bookingType!=="full"&&(
@@ -1129,13 +1279,13 @@ export default function AdminPanel() {
               )}
               {!detail.blocked&&detail.bookingType!=="full"&&(
                 <button onClick={()=>markFull(detail)}
-                  className={cx("flex-1 py-2 text-xs font-semibold rounded-xl ring-1 transition",dark?"text-violet-400 bg-violet-500/10 ring-violet-500/20":"text-violet-600 bg-violet-50 ring-violet-200")}>🏟 Entera</button>
+                  className={cx("flex-1 py-2 text-xs font-semibold rounded-xl ring-1 transition",dark?"text-violet-400 bg-violet-500/10 ring-violet-500/20":"text-violet-600 bg-violet-50 ring-violet-200")}>? Entera</button>
               )}
               <button onClick={()=>toggleBlock(detail)}
                 className={cx("flex-1 py-2 text-xs font-semibold rounded-xl ring-1 transition",
                   detail.blocked?(dark?"text-emerald-400 bg-emerald-500/10 ring-emerald-500/20":"text-emerald-600 bg-emerald-50 ring-emerald-200")
                                 :(dark?"text-rose-400 bg-rose-500/10 ring-rose-500/20":"text-rose-600 bg-rose-50 ring-rose-200")
-                )}>{detail.blocked?"🔓 Desbloquear":"🔒 Bloquear"}</button>
+                )}>{detail.blocked?"DESBLOQUEAR Desbloquear":"BLOQUEAR Bloquear"}</button>
             </div>
             <div>
               <p className={cx("text-[11px] font-semibold uppercase tracking-wider mb-2",th.s)}>Jugadores ({detPl.length}/10)</p>
@@ -1148,12 +1298,12 @@ export default function AdminPanel() {
                   {detPl.map((p,i)=>(
                     <div key={i} className={cx(dark?"bg-white/4 ring-1 ring-white/6":"bg-slate-50 ring-1 ring-slate-200","rounded-xl px-3 py-2.5 flex items-center gap-3")}>
                       {p.type==="guest"?
-                        <div className={cx("w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0",dark?"bg-slate-700":"bg-slate-200")}>👤</div>:
+                        <div className={cx("w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0",dark?"bg-slate-700":"bg-slate-200")}>USUARIO</div>:
                         <img src={p.photoURL||"https://ui-avatars.com/api/?name="+p.username+"&background=151523&color=34d399"} className="w-8 h-8 rounded-full object-cover flex-shrink-0" alt=""/>
                       }
                       <div className="flex-1 min-w-0">
                         <p className={cx("font-semibold text-sm truncate",th.p)}>{p.username}</p>
-                        <p className={cx("text-xs",th.s)}>{p.type==="guest"?"Invitado · "+(p.invBy||""):(p.hoursPlayedFutbol||0)+" hs"}</p>
+                        <p className={cx("text-xs",th.s)}>{p.type==="guest"?"Invitado ? "+(p.invBy||""):(p.hoursPlayedFutbol||0)+" hs"}</p>
                       </div>
                       <button onClick={()=>cancelPlayer(detail,p.uid,p.type==="guest")} className="text-rose-500 hover:text-rose-600 text-xs font-semibold flex-shrink-0 transition">Cancelar</button>
                     </div>
@@ -1168,17 +1318,17 @@ export default function AdminPanel() {
       {/* Agregar jugador */}
       <Modal open={!!addModal} onClose={()=>setAddModal(null)} th={th}>
         {addModal&&(<>
-          <MH title="Agregar jugador" sub={addModal.time+" hs · "+addModal.courtName+" · "+(addModal.playersJoined||0)+"/10"} onClose={()=>setAddModal(null)} th={th}/>
+          <MH title="Agregar jugador" sub={addModal.time+" hs ? "+addModal.courtName+" ? "+(addModal.playersJoined||0)+"/10"} onClose={()=>setAddModal(null)} th={th}/>
           <div className="p-6 space-y-4">
             <div className={cx("flex gap-1.5 p-1 rounded-2xl",th.pill)}>
-              {[{k:"registered",l:"👤 Registrado"},{k:"guest",l:"🙋 Invitado"}].map(t=>(
+              {[{k:"registered",l:"USUARIO Registrado"},{k:"guest",l:"? Invitado"}].map(t=>(
                 <Pill key={t.k} active={addTab===t.k} onClick={()=>setAddTab(t.k)} th={th}>{t.l}</Pill>
               ))}
             </div>
             {addTab==="registered"&&(
               <div className="space-y-3">
                 <div className="relative">
-                  <TInput value={pSearch} onChange={e=>setPSearch(e.target.value)} placeholder="Buscar por apodo…" th={th}/>
+                  <TInput value={pSearch} onChange={e=>setPSearch(e.target.value)} placeholder="Buscar por apodo?" th={th}/>
                   {pLoading&&<div className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"/>}
                 </div>
                 <div className="space-y-1.5 max-h-52 overflow-y-auto">
@@ -1210,17 +1360,17 @@ export default function AdminPanel() {
       <Modal open={courtModal} onClose={()=>setCourtModal(false)} th={th}>
         <MH title={editCourt?"Editar cancha":"Nueva cancha"} onClose={()=>setCourtModal(false)} th={th}/>
         <div className="p-6 space-y-4">
-          <TInput label="Nombre" value={cForm.nombre_cancha} onChange={e=>setCForm(p=>({...p,nombre_cancha:e.target.value}))} placeholder="Ej: Fútbol 5 · La Central" th={th}/>
+          <TInput label="Nombre" value={cForm.nombre_cancha} onChange={e=>setCForm(p=>({...p,nombre_cancha:e.target.value}))} placeholder="Ej: Futbol 5 - La Central" th={th}/>
           <div className="grid grid-cols-2 gap-3">
             <TSelect label="Deporte" value={cForm.deporte} onChange={e=>setCForm(p=>({...p,deporte:e.target.value}))} th={th}>
-              {["Fútbol","Pádel","Tenis","Básquet"].map(d=><option key={d}>{d}</option>)}
+              {["Futbol","Padel","Tenis","Basquet"].map(d=><option key={d}>{d}</option>)}
             </TSelect>
             <TSelect label="Superficie" value={cForm.tipo_superficie} onChange={e=>setCForm(p=>({...p,tipo_superficie:e.target.value}))} th={th}>
-              {["Césped Sintético","Cemento","Parquet","Tierra"].map(s=><option key={s}>{s}</option>)}
+              {["Cesped Sintetico","Cemento","Parquet","Tierra"].map(s=><option key={s}>{s}</option>)}
             </TSelect>
           </div>
           <div className={cx("rounded-xl px-4 py-3 text-xs",dark?"bg-sky-500/8 ring-1 ring-sky-500/15 text-sky-400":"bg-sky-50 ring-1 ring-sky-200 text-sky-600")}>
-            ℹ Precio {fmt(PRECIO_CANCHA)}/turno · {PTS_INDIVIDUAL} pts individual · {PTS_ENTERA} pts entera
+            Precio {fmt(PRECIO_CANCHA)}/turno - {PTS_INDIVIDUAL} pts individual - {PTS_ENTERA} pts entera
           </div>
           <div className="flex gap-3">
             <Btn variant="ghost" className="flex-1" onClick={()=>setCourtModal(false)}>Cancelar</Btn>
@@ -1234,7 +1384,7 @@ export default function AdminPanel() {
         <MH title="Agregar horarios" onClose={()=>setSlotModal(false)} th={th}/>
         <div className="p-6 space-y-4">
           <TSelect label="Cancha" value={sCourtId} onChange={e=>setSCourtId(e.target.value)} th={th}>
-            <option value="">Seleccioná una cancha</option>
+            <option value="">Selecciona una cancha</option>
             {courts.map(c=><option key={c.id} value={c.id}>{c.nombre_cancha}</option>)}
           </TSelect>
           <TInput label="Fecha" type="date" value={sDate} onChange={e=>setSDate(e.target.value)} th={th}/>

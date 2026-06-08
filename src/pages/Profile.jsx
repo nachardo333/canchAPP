@@ -170,8 +170,8 @@ function LevelModal({ open, onClose, level, currentXp, neededXp, pct, totalXp })
                   {/* Recompensa */}
                   {hasCashback ? (
                     <div className="text-right flex-shrink-0">
-                      <p className="text-sm font-black text-amber-400">{fmt(cashback)}</p>
-                      <p className="text-[10px] text-amber-600">cashback</p>
+                      <p className="text-sm font-black text-amber-400">1 reserva</p>
+                      <p className="text-[10px] text-amber-600">gratis</p>
                     </div>
                   ) : (
                     <div className="text-right flex-shrink-0">
@@ -202,7 +202,7 @@ function LevelModal({ open, onClose, level, currentXp, neededXp, pct, totalXp })
             style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
             <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Reglas del cashback</p>
             {[
-              { t: "Solo en hitos clave",  d: "Niveles 5, 10, 20, 30 y 50 tienen recompensa en dinero." },
+              { t: "Solo en hitos clave",  d: "Cada 5 niveles. Equivale a 1 reserva gratis por hito." },
               { t: "Tope por reserva",     d: `Maximo ${fmt(MAX_POINTS_PER_BOOKING)} por reserva (25% del valor).` },
               { t: "Vencimiento",          d: `Los puntos expiran a los ${POINTS_EXPIRY_DAYS} dias sin actividad.` },
             ].map(r => (
@@ -242,7 +242,7 @@ function XPBar({ pct, level, currentXp, neededXp, onClick }) {
           </span>
           {cashbackAtNext && (
             <span className="text-[10px] bg-amber-500/15 text-amber-400 px-2 py-0.5 rounded-full font-bold border border-amber-500/20">
-              Nivel {nextMilestone} = {fmt(cashbackAtNext)} cashback
+              Nivel {nextMilestone} = 1 reserva gratis
             </span>
           )}
         </div>
@@ -462,7 +462,7 @@ function TrophiesGrid({ trophies, onCashbackClaim }) {
                   ? "bg-amber-500/20 text-amber-400 border-amber-500/30"
                   : "bg-white/5 text-gray-600 border-white/5"
               }`}>
-                {t.unlocked ? "RECLAMAR " : ""}{fmt(t.cashback)}
+                {t.unlocked ? "RECLAMAR reserva" : "Reserva gratis"}
               </span>
             )}
 
@@ -489,7 +489,7 @@ function TrophiesGrid({ trophies, onCashbackClaim }) {
         <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">Como funcionan los puntos</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px]">
           {[
-            { icon: "cashback", title: "Cashback en hitos", desc: `Solo en niveles 5, 10, 20, 30 y 50` },
+            { icon: "cashback", title: "Cashback en hitos", desc: `Cada 5 niveles ~ 1 reserva gratis` },
             { icon: "limit",    title: "Tope por reserva",  desc: `Maximo ${fmt(MAX_POINTS_PER_BOOKING)} (25% del valor)` },
             { icon: "expiry",   title: "Vencimiento",       desc: `Expiran a los ${POINTS_EXPIRY_DAYS} dias sin actividad` },
           ].map(s => (
@@ -568,6 +568,18 @@ export default function Profile() {
             showToast("Tus puntos expiraron por inactividad (45 dias).");
           }
           setPrivateData(checked);
+
+          // Mostrar cashback pendiente automaticamente si existe
+          const pending = raw.cashbackPending || {};
+          const pendingEntries = Object.entries(pending).filter(
+            ([lvl]) => !raw[`cashbackClaimed_${lvl}`]
+          );
+          if (pendingEntries.length > 0) {
+            const [lvl, info] = pendingEntries[0];
+            setTimeout(() => {
+              setCashbackModal({ level: Number(lvl), amount: info.amount });
+            }, 1000);
+          }
         });
       }
 
@@ -863,7 +875,7 @@ export default function Profile() {
                 {nextMilestone_ && (
                   <div className="mt-3 pt-3 border-t border-white/5">
                     <p className="text-[11px] text-gray-600">Proximo cashback en nivel {nextMilestone_.level}</p>
-                    <p className="text-sm font-bold text-amber-400">{fmt(nextMilestone_.cashback)}</p>
+                    <p className="text-sm font-bold text-amber-400">1 reserva gratis</p>
                   </div>
                 )}
               </Link>
@@ -961,7 +973,7 @@ export default function Profile() {
                 CASH
               </div>
               <p className="display text-2xl text-white tracking-wide">RECOMPENSA</p>
-              <p className="text-amber-400 font-black text-3xl mt-1">{fmt(cashbackModal.amount)}</p>
+              <p className="text-amber-400 font-black text-3xl mt-1">1 reserva gratis</p>
               <p className="text-xs text-gray-500 mt-1">Nivel {cashbackModal.level} desbloqueado</p>
             </div>
 
@@ -978,8 +990,9 @@ export default function Profile() {
                     puntos: newPuntos,
                     lastActivityTs: Date.now(),
                     [`cashbackClaimed_${cashbackModal.level}`]: "points",
+                    [`cashbackPending/${cashbackModal.level}`]: null,
                   });
-                  showToast(`${fmt(cashbackModal.amount)} agregados a tu billetera`);
+                  showToast("Reserva gratis agregada a tu billetera");
                   setCashbackModal(null);
                 }}
                 className="w-full flex items-center gap-4 p-4 rounded-2xl border transition hover:brightness-110 text-left"
@@ -1002,6 +1015,7 @@ export default function Profile() {
                 onClick={async () => {
                   await update(ref(db, `private_user_data/${currentUser.uid}`), {
                     [`cashbackClaimed_${cashbackModal.level}`]: "mp_pending",
+                    [`cashbackPending/${cashbackModal.level}`]: null,
                     [`cashbackPendingMP_${cashbackModal.level}`]: {
                       amount: cashbackModal.amount,
                       requestedAt: Date.now(),

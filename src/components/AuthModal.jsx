@@ -26,13 +26,13 @@ export default function AuthModal({ open, onClose, onSuccess }) {
 
   if (!open && !showOnboarding) return null;
 
-  // ── Chequear si ya completó onboarding ──────────────────────────
+  // ?? Chequear si ya complet? onboarding ??????????????????????????
   async function checkOnboarding(user) {
     const snap = await get(ref(db, `private_user_data/${user.uid}/onboardingCompleted`));
     return snap.exists() && snap.val() === true;
   }
 
-  // ── Login ───────────────────────────────────────────────────────
+  // ?? Login ???????????????????????????????????????????????????????
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoginFeedback("");
@@ -63,7 +63,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
               [`/public_profiles/${cred.user.uid}/photoURL`]: `https://ui-avatars.com/api/?name=${cred.user.email.split("@")[0]}&background=151523&color=34d399`,
               [`/public_profiles/${cred.user.uid}/hoursPlayedFutbol`]: 0,
               [`/private_user_data/${cred.user.uid}/email`]: cred.user.email,
-              [`/private_user_data/${cred.user.uid}/puntos`]: 1000,
+              [`/private_user_data/${cred.user.uid}/puntos`]: 0,
             });
           }
           setNewUser(cred.user);
@@ -79,7 +79,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
     }
   };
 
-  // ── Google ──────────────────────────────────────────────────────
+  // ?? Google ??????????????????????????????????????????????????????
   const handleGoogle = async () => {
     setLoginFeedback("");
     try {
@@ -88,7 +88,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
       const completed = await checkOnboarding(user);
 
       if (!completed) {
-        // Crear perfil básico si no existe
+        // Crear perfil b?sico si no existe
         const pubSnap = await get(ref(db, `public_profiles/${user.uid}`));
         if (!pubSnap.exists()) {
           await update(ref(db), {
@@ -96,7 +96,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
             [`/public_profiles/${user.uid}/photoURL`]: user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName || "U"}&background=151523&color=34d399`,
             [`/public_profiles/${user.uid}/hoursPlayedFutbol`]: 0,
             [`/private_user_data/${user.uid}/email`]: user.email,
-            [`/private_user_data/${user.uid}/puntos`]: 1000,
+            [`/private_user_data/${user.uid}/puntos`]: 0,
           });
         }
         setNewUser(user);
@@ -111,7 +111,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
     }
   };
 
-  // ── Register ────────────────────────────────────────────────────
+  // ?? Register ????????????????????????????????????????????????????
   const handleRegister = async (e) => {
     e.preventDefault();
     setRegisterFeedback("");
@@ -133,7 +133,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
         [`/public_profiles/${uid}/photoURL`]: `https://ui-avatars.com/api/?name=${username}&background=151523&color=34d399`,
         [`/public_profiles/${uid}/hoursPlayedFutbol`]: 0,
         [`/private_user_data/${uid}/email`]: email,
-        [`/private_user_data/${uid}/puntos`]: 1000,
+        [`/private_user_data/${uid}/puntos`]: 0,
       });
 
       setNewUser(cred.user);
@@ -146,7 +146,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
     }
   };
 
-  // ── Onboarding completado ───────────────────────────────────────
+  // ?? Onboarding completado ???????????????????????????????????????
   function handleOnboardingComplete(displayName) {
     setShowOnboarding(false);
     setNewUser(null);
@@ -227,7 +227,7 @@ export default function AuthModal({ open, onClose, onSuccess }) {
             {view === "register" && (
               <div>
                 <p className="display text-4xl text-white mb-1">CREAR CUENTA</p>
-                <p className="text-gray-500 text-sm mb-6">Empezá con 1000 puntos gratis ✨</p>
+                <p className="text-gray-500 text-sm mb-6">Reservá canchas y ganá puntos jugando</p>
                 <form onSubmit={handleRegister} className="space-y-3">
                   {[
                     { name: "username", type: "text", placeholder: "Apodo (público)" },

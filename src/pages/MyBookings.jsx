@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { ref, get, update, remove, onValue, push } from "firebase/database";
 import { auth, db } from "../firebase";
 import Layout from "../components/Layout";
+import { processMatchCompletion } from "../hooks/useGamification";
 
 const CANCEL_PENALTY_PCT = 0.15;
 
@@ -109,10 +110,11 @@ export default function MyBookings() {
   const [detailPlayers, setDetailPlayers] = useState([]);
   const [detailGuests, setDetailGuests] = useState([]);
   const [detailLoading, setDetailLoading] = useState(false);
-  const [mvpVote, setMvpVote] = useState(null);       // uid votado
+  const [mvpVote, setMvpVote] = useState(null);
   const [mvpSubmitting, setMvpSubmitting] = useState(false);
-  const [matchDesc, setMatchDesc] = useState("");      // descripcion del partido
+  const [matchDesc, setMatchDesc] = useState("");
   const [savingDesc, setSavingDesc] = useState(false);
+  const [isDetailPast, setIsDetailPast] = useState(false);
 
   // Cancel modal
   const [cancelModal, setCancelModal] = useState(null);
@@ -171,11 +173,25 @@ export default function MyBookings() {
     const up = [], past_ = [];
 
     Object.entries(bookings).forEach(([id, b]) => {
-      // Usar fecha local explicitamente para evitar desfasaje de timezone
-      const [year, month, day] = b.date.split("-").map(Number);
-      const [hour, min] = b.time.split(":").map(Number);
-      const dt = new Date(year, month - 1, day, hour, min, 0);
-      dt > now ? up.push({ ...b, id }) : past_.push({ ...b, id });
+      try {
+        if (!b.date || !b.time) {
+          // Sin fecha definida va al historial
+          past_.push({ ...b, id });
+          return;
+        }
+        const [year, month, day] = b.date.split("-").map(Number);
+        const [hour, min] = b.time.split(":").map(Number);
+        const dt = new Date(year, month - 1, day, hour, min, 0);
+        if (isNaN(dt.getTime())) {
+          past_.push({ ...b, id });
+          return;
+        }
+        // Agregar 60 minutos de gracia ? el partido termina ~1hs despues
+        const dtEnd = new Date(dt.getTime() + 60 * 60 * 1000);
+        dtEnd > now ? up.push({ ...b, id }) : past_.push({ ...b, id });
+      } catch {
+        past_.push({ ...b, id });
+      }
     });
 
     // Enriquecer con playersJoined
@@ -196,16 +212,59 @@ export default function MyBookings() {
       })
     );
 
-    enriched.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
-    past_.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`));
+    function toLocalDate(b) {
+      try {
+        const [y, mo, d] = b.date.split("-").map(Number);
+        const [h, mi] = b.time.split(":").map(Number);
+        return new Date(y, mo - 1, d, h, mi);
+      } catch { return new Date(0); }
+    }
+
+    enriched.sort((a, b) => toLocalDate(a) - toLocalDate(b));
+    past_.sort((a, b) => toLocalDate(b) - toLocalDate(a));
     setUpcoming(enriched);
     setPast(past_);
     setLoading(false);
+
+    // Procesar XP para reservas pasadas que no fueron procesadas todavia
+    const xpChecks = await Promise.all(
+      past_.map(async (b) => {
+        if (!b.id) return null;
+        const snap = await get(ref(db, `users/${user.uid}/bookings/${b.id}/xpProcessed`));
+        if (snap.exists()) return null; // ya procesado
+        return b;
+      })
+    );
+
+    const toProcess = xpChecks.filter(Boolean);
+    for (const booking of toProcess) {
+      try {
+        const isOrganizer = booking.bookingType === "full" || !booking.invitedBy;
+        const firstSnap = await get(ref(db, `private_user_data/${user.uid}/totalXp`));
+        const isFirstMatch = !firstSnap.exists() || firstSnap.val() === 0;
+
+        await processMatchCompletion({
+          uid: user.uid,
+          isOrganizer,
+          isMvp: false, // MVP se suma cuando recibe votos
+          isFirstMatch,
+          hasStreak: false,
+        });
+
+        // Marcar como procesado para no volver a contar
+        await update(ref(db, `users/${user.uid}/bookings/${booking.id}`), {
+          xpProcessed: true,
+        });
+      } catch (err) {
+        console.error("Error procesando XP para booking:", booking.id, err);
+      }
+    }
   }
 
   // ?? Detail modal ????????????????????????????????????????????????????????????
-  async function openDetail(booking) {
+  async function openDetail(booking, isPastBooking = false) {
     setDetailModal(booking);
+    setIsDetailPast(isPastBooking);
     setDetailPlayers([]);
     setDetailGuests([]);
     setDetailLoading(true);
@@ -246,20 +305,36 @@ export default function MyBookings() {
     setMvpSubmitting(true);
     try {
       const path = detailModal.bookingPath;
-      // Guardar voto: un voto por usuario
       await update(ref(db, path + "/mvpVotes"), {
         [currentUser.uid]: targetUid,
       });
-      // Contar votos y actualizar mvpWinner
       const snap = await get(ref(db, path + "/mvpVotes"));
       if (snap.exists()) {
         const votes = Object.values(snap.val());
-        const counts = votes.reduce((acc, uid) => { acc[uid] = (acc[uid] || 0) + 1; return acc; }, {});
+        const counts = votes.reduce((acc, uid) => {
+          acc[uid] = (acc[uid] || 0) + 1; return acc;
+        }, {});
         const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
         await update(ref(db, path), { mvpWinner: winner });
-        // Sumar XP al MVP ganador en private_user_data
+
+        // Sumar XP MVP al ganador via processMatchCompletion
+        const prevWinnerSnap = await get(ref(db, path + "/mvpWinner"));
+        const prevWinner = prevWinnerSnap.val();
+        if (winner && winner !== prevWinner) {
+          // Nuevo ganador ? darle XP de MVP
+          await processMatchCompletion({
+            uid: winner,
+            isOrganizer: false,
+            isMvp: true,
+            isFirstMatch: false,
+            hasStreak: false,
+          });
+        }
+        // Contador de votos recibidos en el perfil publico
+        const mvpRef = ref(db, `private_user_data/${winner}/mvpVotes`);
+        const mvpSnap = await get(mvpRef);
         await update(ref(db, `private_user_data/${winner}`), {
-          mvpVotes: ((await get(ref(db, `private_user_data/${winner}/mvpVotes`))).val() || 0) + 1,
+          mvpVotes: (mvpSnap.val() || 0) + 1,
           lastActivityTs: Date.now(),
         });
       }
@@ -562,7 +637,7 @@ export default function MyBookings() {
                 <div className="space-y-3">
                   {upcoming.map((b) => (
                     <BookingCard key={b.id} booking={b} isPast={false}
-                      onDetail={openDetail} onCancel={setCancelModal}
+                      onDetail={(bk) => openDetail(bk, false)} onCancel={setCancelModal}
                       onChat={openChat} onInvite={openInvite} />
                   ))}
                 </div>
@@ -578,7 +653,7 @@ export default function MyBookings() {
                 <div className="space-y-3">
                   {past.map((b) => (
                     <BookingCard key={b.id} booking={b} isPast={true}
-                      onDetail={openDetail} onCancel={setCancelModal} onChat={openChat} />
+                      onDetail={(bk) => openDetail(bk, true)} onCancel={setCancelModal} onChat={openChat} />
                   ))}
                 </div>
               )}
@@ -644,7 +719,7 @@ export default function MyBookings() {
                 </div>
 
                 {/* MVP voting - solo en partidos pasados con jugadores registrados */}
-                {past.some(b => b.id === detailModal.id) && detailPlayers.length > 1 && (
+                {isDetailPast && detailPlayers.length >= 1 && (
                   <div className="mb-4 bg-amber-950/20 border border-amber-700/20 rounded-2xl p-3">
                     <p className="text-xs font-bold text-amber-400 mb-2 flex items-center gap-1.5">
                       <span>MVP</span>
@@ -677,7 +752,7 @@ export default function MyBookings() {
                 )}
 
                 {/* Descripcion del partido */}
-                {past.some(b => b.id === detailModal.id) && (
+                {isDetailPast && (
                   <div className="mb-4">
                     <p className="text-xs font-bold text-gray-500 mb-1.5">Como fue el partido?</p>
                     <textarea

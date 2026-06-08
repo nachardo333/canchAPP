@@ -226,3 +226,26 @@ input[type="range"]::-moz-range-thumb {
   border-color: var(--clr-green) !important;
 }
 .flatpickr-day:hover { background: rgba(16,185,129,0.15) !important; }
+
+/* ── Admin Panel mode ───────────────────────────────────────────── */
+body.admin-mode {
+  background-color: #f1f5f9 !important;
+  background-image: none !important;
+  color: #0f172a !important;
+}
+body[data-admin-dark="1"] {
+  background-color: #06060f !important;
+  background-image: none !important;
+  color: #f1f5f9 !important;
+}
+body.admin-mode .animated-bg,
+body.admin-mode .ambient-orb,
+body.admin-mode canvas,
+body[data-admin-dark="1"] .animated-bg,
+body[data-admin-dark="1"] .ambient-orb,
+body[data-admin-dark="1"] canvas {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

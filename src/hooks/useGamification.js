@@ -8,7 +8,7 @@ import { db } from "../firebase";
 // -- XP por accion -------------------------------------------------------------
 export const XP_PER_MATCH       = 40;
 export const XP_ORGANIZER_BONUS = 25;
-export const XP_MVP_BONUS       = 35;
+export const XP_MVP_BONUS       = 10;
 export const XP_FIRST_MATCH     = 60;
 export const XP_STREAK_BONUS    = 20;
 
@@ -40,15 +40,20 @@ export function calcLevel(totalXp) {
   return { level, currentXp: remaining, neededXp: needed, pct };
 }
 
-// -- Cashback cada 5 niveles, escala con 18% de mejora por hito ---------------
-// Nivel 5=$800 | 10=$1652 | 15=$2515 | 20=$3540 | 25=$4795...
-// Primeros niveles mas generosos para enganchar. Nunca supera 8% de lo ganado.
+// -- Cashback cada 5 niveles - escala para que el usuario lo sienta real -------
+// Nivel 5  (~26 partidos)   = $2.500  ~ 1 reserva gratis
+// Nivel 10 (~171 partidos)  = $5.000  ~ 2 reservas gratis
+// Nivel 15 (~492 partidos)  = $7.500  ~ 3 reservas gratis
+// Nivel 20 (~1033 partidos) = $10.000 ~ 4 reservas gratis
+// Nivel 25+ escala 15% por hito. Nunca supera 4% de lo ganado.
 export function cashbackAtLevel(level) {
   if (level % 5 !== 0) return 0;
   const hito = level / 5;
-  // Bonus extra en los primeros 3 hitos para motivar usuarios nuevos
-  const baseMultiplier = hito <= 1 ? 800 : hito <= 2 ? 700 : hito <= 3 ? 600 : 400;
-  return Math.round(baseMultiplier * hito * Math.pow(1.18, hito - 1));
+  if (hito === 1) return 2500;
+  if (hito === 2) return 5000;
+  if (hito === 3) return 7500;
+  if (hito === 4) return 10000;
+  return Math.round(10000 * Math.pow(1.15, hito - 4));
 }
 
 // Retorna info completa de un nivel hito
